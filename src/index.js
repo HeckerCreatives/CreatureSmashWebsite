@@ -41,7 +41,6 @@ root.render(
       <Route path="/user/*" element={<UserLayout />} />
       <Route path="/login" element={<Login/>} />
       <Route path="/register" element={<Register/>} />
-      {/* <Route path="/register" element={<Navigate to="/register?id=65eeeeabd9576a4f8ae38afd" replace />} /> */}
       <Route path="/" element={<Navigate to="/login" replace />} />
     </Routes>
   </BrowserRouter>

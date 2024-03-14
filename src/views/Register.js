@@ -42,8 +42,6 @@ const Register = () => {
     } else {
       window.location.href = "/register?id=65eeeeabd9576a4f8ae38afd";
     }
-    
-    
   },[])
 
   const register = (e) => {
