@@ -29,42 +29,111 @@ import UserDashboard from "views/Users/Dashboard";
 import Userprofile from "views/Users/Userprofile";
 import Inventory from "views/Users/Inventory";
 import Mynetwork from "views/Users/Mynetwork";
-
+import AdminDashboard from "views/Admin/Dashboard";
+const role = "superadmin"
 // const role = "admin"
-const role = "user"
+// const role = "user"
 let routes;
 
 switch(role){
+  case "superadmin":
+    routes = [
+      {
+        path: "/dashboard",
+        name: "Dashboard",
+        icon: "nc-icon nc-bank",
+        // component: <AdminDashboard />,
+        layout: "/admin",
+      },
+      {
+        path: "/manageaccount",
+        name: "Manage Account",
+        icon: "fas fa-users-gear",
+        // component: <Icons />,
+        layout: "/admin",
+      },
+      {
+        path: "/event",
+        name: "Event",
+        icon: "fas fa-trophy",
+        // component: <Maps />,
+        layout: "/admin",
+      },
+      {
+        path: "/payin",
+        name: "Payin",
+        icon: "fas fa-money-bill-1-wave",
+        // component: <UserPage />,
+        layout: "/admin",
+      },
+      {
+        path: "/payout",
+        name: "Payout",
+        icon: "fas fa-money-bill-wave",
+        // component: <TableList />,
+        layout: "/admin",
+      },
+      {
+        path: "",
+        name: "Settings",
+        icon: "fas fa-gear",
+        // component: <Notifications />,
+        layout: "/admin",
+        children: [
+          {
+            path: "/setting",
+            name: "subsetting"
+          }
+        ]
+      },
+      
+      // {
+      //   path: "/typography",
+      //   name: "Typography",
+      //   icon: "nc-icon nc-caps-small",
+      //   component: <Typography />,
+      //   layout: "/admin",
+      // },
+      // {
+      //   pro: true,
+      //   path: "/upgrade",
+      //   name: "Upgrade to PRO",
+      //   icon: "nc-icon nc-spaceship",
+      //   component: <UpgradeToPro />,
+      //   layout: "/admin",
+      // },
+    ];
+  break;
   case "admin":
     routes = [
       {
         path: "/dashboard",
         name: "Dashboard",
         icon: "nc-icon nc-bank",
-        component: <Dashboard />,
+        component: <AdminDashboard />,
         layout: "/admin",
       },
       {
-        path: "/icons",
-        name: "Icons",
-        icon: "nc-icon nc-diamond",
-        component: <Icons />,
+        path: "/topup",
+        name: "Top up",
+        icon: "fas fa-money-bill-1-wave",
+        // component: <Icons />,
         layout: "/admin",
       },
-      // {
-      //   path: "/maps",
-      //   name: "Maps",
-      //   icon: "nc-icon nc-pin-3",
-      //   component: <Maps />,
-      //   layout: "/admin",
-      // },
-      // {
-      //   path: "/notifications",
-      //   name: "Notifications",
-      //   icon: "nc-icon nc-bell-55",
-      //   component: <Notifications />,
-      //   layout: "/admin",
-      // },
+      {
+        path: "/payout",
+        name: "Payout",
+        icon: "fas fa-money-bill-wave",
+        // component: <Maps />,
+        layout: "/admin",
+      },
+      {
+        path: "/setting",
+        name: "Settings",
+        icon: "fas fa-gear",
+        // component: <Notifications />,
+        layout: "/admin",
+      },
       // {
       //   path: "/user-page",
       //   name: "User Profile",
