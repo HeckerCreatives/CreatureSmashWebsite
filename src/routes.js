@@ -101,7 +101,7 @@ switch(role){
       {
         path: "/dashboard",
         name: "Dashboard",
-        icon: "nc-icon nc-bank",
+        icon: "fas fa-building-columns",
         component: <UserDashboard/>,
         layout: "/user",
       },
@@ -115,14 +115,14 @@ switch(role){
       {
         path: "/cashin",
         name: "Cash In",
-        icon: "nc-icon nc-minimal-down",
+        icon: "fas fa-circle-dollar-to-slot",
         // component: <Mynetwork/>,
         layout: "/user",
       },
       {
         path: "/cashout",
         name: "Cash Out",
-        icon: "nc-icon nc-minimal-up",
+        icon: "far fa-money-bill-1",
         // component: <Mynetwork/>,
         layout: "/user",
       },
