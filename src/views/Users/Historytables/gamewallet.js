@@ -88,7 +88,7 @@ function GameWalletHistory() {
                         maximumFractionDigits: 2
                         })}
                         </td>
-                        <td>{data.from.username}</td>
+                        <td>{data.from?.username}</td>
                       </tr>
                     ))
                   ) : (

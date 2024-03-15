@@ -30,9 +30,12 @@ import Userprofile from "views/Users/Userprofile";
 import Inventory from "views/Users/Inventory";
 import Mynetwork from "views/Users/Mynetwork";
 import AdminDashboard from "views/Admin/Dashboard";
-const role = "superadmin"
+import AdminTopup from "views/Admin/Topup";
+import AdminPayout from "views/Admin/Payout";
+import SuperAdminDashboard from "views/Superadmin/Dashboard";
+// const role = "superadmin"
 // const role = "admin"
-// const role = "user"
+const role = "user"
 let routes;
 
 switch(role){
@@ -42,7 +45,7 @@ switch(role){
         path: "/dashboard",
         name: "Dashboard",
         icon: "nc-icon nc-bank",
-        // component: <AdminDashboard />,
+        component: <SuperAdminDashboard />,
         layout: "/admin",
       },
       {
@@ -74,17 +77,11 @@ switch(role){
         layout: "/admin",
       },
       {
-        path: "",
+        path: "/setting",
         name: "Settings",
         icon: "fas fa-gear",
         // component: <Notifications />,
         layout: "/admin",
-        children: [
-          {
-            path: "/setting",
-            name: "subsetting"
-          }
-        ]
       },
       
       // {
@@ -117,14 +114,14 @@ switch(role){
         path: "/topup",
         name: "Top up",
         icon: "fas fa-money-bill-1-wave",
-        // component: <Icons />,
+        component: <AdminTopup />,
         layout: "/admin",
       },
       {
         path: "/payout",
         name: "Payout",
         icon: "fas fa-money-bill-wave",
-        // component: <Maps />,
+        component: <AdminPayout />,
         layout: "/admin",
       },
       {
