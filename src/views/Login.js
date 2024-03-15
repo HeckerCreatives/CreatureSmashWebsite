@@ -36,9 +36,17 @@ const Login = () => {
                   })
                   .then(result1 => {
                     if(result1.isConfirmed){
-                        window.location.href = `user/dashboard`
+                        if(data.data.auth === "superadmin"){
+                            localStorage.setItem('uid', btoa("superadmin"))
+                            window.location.href = `superadmin/dashboard`
+                        } else if(data.data.auth === "admin"){
+                            localStorage.setItem('uid', btoa("admin"))
+                            window.location.href = `admin/dashboard`
+                        } else if(data.data.auth === "player"){
+                            localStorage.setItem('uid', btoa("player"))
+                            window.location.href = `user/dashboard`
+                        }
                     }
-                    
                 })
             }
         })

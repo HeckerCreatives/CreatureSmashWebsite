@@ -27,6 +27,7 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
+import SuperAdminLayout from "layouts/Superadmin.js";
 import AdminLayout from "layouts/Admin.js";
 import UserLayout from "layouts/User.js"
 import Login from "views/Login";
@@ -37,6 +38,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Routes>
+      <Route path="/superadmin/*" element={<SuperAdminLayout />} />
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/user/*" element={<UserLayout />} />
       <Route path="/login" element={<Login/>} />

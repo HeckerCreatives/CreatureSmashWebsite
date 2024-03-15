@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.3.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/main/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import Dashboard from "views/Dashboard.js";
 import Notifications from "views/Notifications.js";
 import Icons from "views/Icons.js";
@@ -33,9 +15,16 @@ import AdminDashboard from "views/Admin/Dashboard";
 import AdminTopup from "views/Admin/Topup";
 import AdminPayout from "views/Admin/Payout";
 import SuperAdminDashboard from "views/Superadmin/Dashboard";
+import SuperAdminManageAccount from "views/Superadmin/Manageaccount";
+import SuperAdminEvent from "views/Superadmin/Event";
+import SuperAdminPayin from "views/Superadmin/Payin";
+import SuperAdminPayout from "views/Superadmin/Payout";
+import SuperAdminSettings from "views/Superadmin/Settings";
+let role = localStorage.getItem('uid')
+role = atob(role)
 // const role = "superadmin"
 // const role = "admin"
-const role = "user"
+// const role = "user"
 let routes;
 
 switch(role){
@@ -46,42 +35,42 @@ switch(role){
         name: "Dashboard",
         icon: "nc-icon nc-bank",
         component: <SuperAdminDashboard />,
-        layout: "/admin",
+        layout: "/superadmin",
       },
       {
         path: "/manageaccount",
         name: "Manage Account",
         icon: "fas fa-users-gear",
-        // component: <Icons />,
-        layout: "/admin",
+        component: <SuperAdminManageAccount />,
+        layout: "/superadmin",
       },
       {
         path: "/event",
         name: "Event",
         icon: "fas fa-trophy",
-        // component: <Maps />,
-        layout: "/admin",
+        component: <SuperAdminEvent />,
+        layout: "/superadmin",
       },
       {
         path: "/payin",
         name: "Payin",
         icon: "fas fa-money-bill-1-wave",
-        // component: <UserPage />,
-        layout: "/admin",
+        component: <SuperAdminPayin />,
+        layout: "/superadmin",
       },
       {
         path: "/payout",
         name: "Payout",
         icon: "fas fa-money-bill-wave",
-        // component: <TableList />,
-        layout: "/admin",
+        component: <SuperAdminPayout />,
+        layout: "/superadmin",
       },
       {
         path: "/setting",
         name: "Settings",
         icon: "fas fa-gear",
-        // component: <Notifications />,
-        layout: "/admin",
+        component: <SuperAdminSettings />,
+        layout: "/superadmin",
       },
       
       // {
@@ -162,7 +151,7 @@ switch(role){
       // },
     ];
   break;
-  case "user":
+  case "player":
     routes = [
       {
         path: "/dashboard",

@@ -72,7 +72,7 @@ function GameWalletHistory() {
                     <tr>
                       <th>Date</th>
                       <th>Amount</th>
-                      <th>From</th>
+                      {/* <th>From</th> */}
                     </tr>
                   </thead>
                   <tbody>
@@ -88,7 +88,7 @@ function GameWalletHistory() {
                         maximumFractionDigits: 2
                         })}
                         </td>
-                        <td>{data.from?.username}</td>
+                        {/* <td>{data.from?.username}</td> */}
                       </tr>
                     ))
                   ) : (
