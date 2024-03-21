@@ -11,7 +11,7 @@ import {
  } from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-const TopupHistory = () => {
+const GamePayoutHistory = () => {
     const [history, setHistory] = useState([]),
     [page, setPage] = useState(1),
     [isloading, setIsLoading] = useState(false),
@@ -19,7 +19,7 @@ const TopupHistory = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        fetch(`${process.env.REACT_APP_API_URL}/payin/getpayinhistoryadmin?page=${page - 1}&limit=10`,{
+        fetch(`${process.env.REACT_APP_API_URL}/payout/getpayouthistoryadmin?page=${page - 1}&limit=10&type=gamebalance`,{
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -43,7 +43,7 @@ const TopupHistory = () => {
       
             if(data.message == "success"){
                 setIsLoading(false)
-                setHistory(data.data.payinhistory)
+                setHistory(data.data.history)
                 setTotal(data.data.totalPages)
             } else if (data.message == "failed"){
                 setIsLoading(false)
@@ -58,7 +58,7 @@ const TopupHistory = () => {
 
     return (
         <MDBContainer>
-            <MDBTypography tag={'h2'}>Top Up History</MDBTypography>
+            <MDBTypography tag={'h2'}>Game Payout History</MDBTypography>
             <MDBCard>
                 <MDBCardBody>
                     {/* <MDBCardTitle>Top Up History</MDBCardTitle> */}
@@ -76,14 +76,14 @@ const TopupHistory = () => {
                         history.length !== 0 ?
                             history.map((data, i) =>(
                             <tr key={i} className="text-center">
-                                <th scope='row'>{data.owner}</th>
+                                <th scope='row'>{data.owner.username}</th>
                                 <td>{data.value?.toLocaleString('en-US', {
                                 style: 'decimal',
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2
                                 })}</td>
                                 <td>{data.status}</td>
-                                <td>{data.processby}</td>
+                                <td>{data.processby.username}</td>
                             </tr>
                             ))
                         :
@@ -105,4 +105,4 @@ const TopupHistory = () => {
     )
 }
 
-export default TopupHistory;
+export default GamePayoutHistory;

@@ -7,6 +7,7 @@ import {
     MDBTabsPane,
     MDBIcon
 } from 'mdb-react-ui-kit';
+import LeaderboardRank from "./Event/leaderboard";
 const SuperAdminEvent = () => {
     const [basicActive, setBasicActive] = useState('tab1');
 
@@ -39,7 +40,7 @@ const SuperAdminEvent = () => {
 
         <MDBTabsContent>
             <MDBTabsPane open={basicActive === 'tab1'}>
-            {/* <FiatWalletHistory/> */}
+            <LeaderboardRank/>
             </MDBTabsPane>
             <MDBTabsPane open={basicActive === 'tab2'}> 
             {/* <GameWalletHistory/> */}

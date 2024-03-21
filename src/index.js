@@ -32,6 +32,7 @@ import AdminLayout from "layouts/Admin.js";
 import UserLayout from "layouts/User.js"
 import Login from "views/Login";
 import Register from "views/Register";
+import SAviewplayer from "views/Superadmin/Manageaccount/Viewplayer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -43,6 +44,7 @@ root.render(
       <Route path="/user/*" element={<UserLayout />} />
       <Route path="/login" element={<Login/>} />
       <Route path="/register" element={<Register/>} />
+      <Route path="/viewplayer/:userId" element={<SAviewplayer/>} />
       <Route path="/" element={<Navigate to="/login" replace />} />
     </Routes>
   </BrowserRouter>

@@ -47,6 +47,10 @@ function Header(props) {
   const [color, setColor] = React.useState("transparent");
   const sidebarToggle = React.useRef();
   const location = useLocation();
+
+  let role = localStorage.getItem('uid')
+  role = atob(role)
+
   const toggle = () => {
     if (isOpen) {
       setColor("transparent");
@@ -55,6 +59,7 @@ function Header(props) {
     }
     setIsOpen(!isOpen);
   };
+
   const dropdownToggle = (e) => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -133,39 +138,42 @@ function Header(props) {
   }
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/user/getreferrallink`,{
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    }).then(result => result.json())
-    .then(data => {
-      if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
-        Swal.fire({
-          icon: "error",
-          title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
-          text: data.message == "duallogin" ? "Hi Creature, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Creature please contact admin" : "You Will Redirect to Login",
-          allowOutsideClick: false,
-          allowEscapeKey: false
-        }).then(ok => {
-          if(ok.isConfirmed){
-            window.location.href = "/login";
-          }
-        })
-      }
-
-      if(data.message == "success"){
-        setId(data.data)
-      } else if (data.message == "failed"){
-        Swal.fire({
-          title: data.message,
-          icon: "info",
-          text: data.data
-        })
-      }
-
-    })
+    if(role == "player"){
+      fetch(`${process.env.REACT_APP_API_URL}/user/getreferrallink`,{
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then(result => result.json())
+      .then(data => {
+        if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+          Swal.fire({
+            icon: "error",
+            title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+            text: data.message == "duallogin" ? "Hi Creature, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Creature please contact admin" : "You Will Redirect to Login",
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(ok => {
+            if(ok.isConfirmed){
+              window.location.href = "/login";
+            }
+          })
+        }
+  
+        if(data.message == "success"){
+          setId(data.data)
+        } else if (data.message == "failed"){
+          Swal.fire({
+            title: data.message,
+            icon: "info",
+            text: data.data
+          })
+        }
+  
+      })
+    }
+    
   },[])
 
   return (
@@ -215,14 +223,18 @@ function Header(props) {
             </InputGroup>
           </form> */}
           <Nav navbar>
-          <NavItem>
+            {
+              role == "player" && 
+            <NavItem>
               <Link onClick={() => kapy(`${window.location.origin}/register?id=${id}`)} className="nav-link btn-magnify">
                 <i className="fas fa-link" />
                 <p>
-                  <span className="d-lg-none d-md-block">Stats</span>
+                  <span className="d-lg-none d-md-block">Referral link</span>
                 </p>
               </Link>
             </NavItem>
+            }
+            
             <Dropdown
               nav
               isOpen={dropdownOpen}

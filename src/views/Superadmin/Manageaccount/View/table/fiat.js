@@ -13,15 +13,15 @@ import {
   Col,
 } from "reactstrap";
 import Swal from "sweetalert2";
-function GameWalletHistory() {
-    const [gamewallethistory, setGameWalletHistory] = useState([]),
+function FiatHistory({id}) {
+    const [fiatwallethistory, setFiatWalletHistory] = useState([]),
     [page, setPage] = useState(1),
     [isloading, setIsLoading] = useState(false),
     [total, setTotal] = useState(0);
 
     useEffect(() => {
-      setIsLoading(true)
-        fetch(`${process.env.REACT_APP_API_URL}/wallethistory/playerwallethistory?type=gamebalance&page=${page - 1}&limit=10`,{
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}/wallethistory/getplayerwallethistoryforadmin?playerid=${id}&type=fiatbalance&page=${page - 1}&limit=10`,{
           method: 'GET',
           credentials: 'include',
           headers: {
@@ -29,7 +29,6 @@ function GameWalletHistory() {
           },
         }).then(result => result.json())
         .then(data => {
-          
           if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
             Swal.fire({
               icon: "error",
@@ -43,10 +42,10 @@ function GameWalletHistory() {
               }
             })
           }
-
+    
           if(data.message == "success"){
-            setGameWalletHistory(Object.values(data.data.history))
             setIsLoading(false)
+            setFiatWalletHistory(Object.values(data.data.history))
             setTotal(data.data.pages)
           } else if (data.message == "failed"){
             Swal.fire({
@@ -57,7 +56,8 @@ function GameWalletHistory() {
           }
         })
     },[page])
-  return (  
+
+  return (
     <>
       <div className="content">
         <Row>
@@ -72,12 +72,12 @@ function GameWalletHistory() {
                     <tr>
                       <th>Date</th>
                       <th>Amount</th>
-                      {/* <th>Status</th> */}
+                      <th>From</th>
                     </tr>
                   </thead>
                   <tbody>
-                  {gamewallethistory.length !== 0 ? (
-                    gamewallethistory.map((data, i) => (
+                    { fiatwallethistory.length != 0 ?
+                      fiatwallethistory.map((data, i) => (
                       <tr key={i}>
                         <td>{new Date(data.createdAt).toLocaleString()}</td>
                         <td>
@@ -87,15 +87,15 @@ function GameWalletHistory() {
                         maximumFractionDigits: 2
                         })}
                         </td>
-                        {/* <td>{data.from?.username}</td> */}
+                        <td>{data.from?.username}</td>
                       </tr>
-                    ))
-                  ) : (
-                    // If gamewallethistory array is empty
-                    <tr className="text-center">
-                      <td colSpan={3}>No Data</td>
-                    </tr>
-                  )}
+                      ))
+                      :
+                      <tr className="text-center">
+                        <td colSpan={3}>No Data</td>
+                      </tr>
+                    }
+                    
                   </tbody>
                 </Table>
                 
@@ -114,4 +114,4 @@ function GameWalletHistory() {
   );
 }
 
-export default GameWalletHistory;
+export default FiatHistory;

@@ -20,6 +20,10 @@ import SuperAdminEvent from "views/Superadmin/Event";
 import SuperAdminPayin from "views/Superadmin/Payin";
 import SuperAdminPayout from "views/Superadmin/Payout";
 import SuperAdminSettings from "views/Superadmin/Settings";
+import UserCashin from "views/Users/Cashin";
+import UserCashout from "views/Users/Cashout";
+import Maintenance from "views/Superadmin/Maintenance";
+import AdminSettings from "views/Admin/Settings";
 let role = localStorage.getItem('uid')
 role = atob(role)
 // const role = "superadmin"
@@ -49,6 +53,13 @@ switch(role){
         name: "Event",
         icon: "fas fa-trophy",
         component: <SuperAdminEvent />,
+        layout: "/superadmin",
+      },
+      {
+        path: "/maintenance",
+        name: "Maintenance",
+        icon: "fas fa-tools",
+        component: <Maintenance />,
         layout: "/superadmin",
       },
       {
@@ -117,7 +128,7 @@ switch(role){
         path: "/setting",
         name: "Settings",
         icon: "fas fa-gear",
-        // component: <Notifications />,
+        component: <AdminSettings />,
         layout: "/admin",
       },
       // {
@@ -171,14 +182,14 @@ switch(role){
         path: "/cashin",
         name: "Cash In",
         icon: "fas fa-circle-dollar-to-slot",
-        // component: <Mynetwork/>,
+        component: <UserCashin/>,
         layout: "/user",
       },
       {
         path: "/cashout",
         name: "Cash Out",
         icon: "far fa-money-bill-1",
-        // component: <Mynetwork/>,
+        component: <UserCashout/>,
         layout: "/user",
       },
       {

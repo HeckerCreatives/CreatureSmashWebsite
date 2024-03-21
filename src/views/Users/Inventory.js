@@ -17,23 +17,6 @@
 
 */
 import React, {useState} from "react";
-// reactstrap components
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Row,
-  Col,
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane,
-  CardText,
-  Button
-} from "reactstrap";
 
 import {
     MDBTabs,

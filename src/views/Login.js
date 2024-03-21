@@ -9,6 +9,7 @@ import {
     MDBCardText} from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import Swal from "sweetalert2";
+import bg from "assets/recent-game-bg.png"
 const Login = () => {
 
     const login = (e) => {
@@ -54,10 +55,10 @@ const Login = () => {
     }
 
     return (
-       <MDBContainer className="d-flex align-items-center justify-content-center min-vh-100">
+       <MDBContainer fluid className="d-flex align-items-center justify-content-center min-vh-100" style={{background: `center/cover no-repeat url(${bg})`}}>
         <MDBRow>
             <MDBCol>
-            <MDBCard>
+            <MDBCard shadow="0">
             <MDBCardBody>
             <MDBCardText tag="h1" className="text-center">Login</MDBCardText>
             <form onSubmit={login}>
@@ -80,7 +81,7 @@ const Login = () => {
                 </div>
             </form>
             </MDBCardBody>
-        </MDBCard>
+            </MDBCard>
             </MDBCol>
         </MDBRow>
        </MDBContainer>

@@ -5,8 +5,13 @@ import {
     MDBTabsLink,
     MDBTabsContent,
     MDBTabsPane,
-    MDBIcon
+    MDBIcon,
+    MDBTypography
 } from 'mdb-react-ui-kit';
+import SAcommissionpayoutlist from "./Payout/commissionlist";
+import SAcommissionpayouthistory from "./Payout/commissionhistory";
+import SAgamepayoutlist from "./Payout/gamelist";
+import SAgamepayouthistory from "./Payout/gamehistory";
 const SuperAdminPayout = () => {
     const [basicActive, setBasicActive] = useState('tab1');
 
@@ -30,23 +35,21 @@ const SuperAdminPayout = () => {
             <MDBIcon fas icon="dice" className='me-2'/>Game
             </MDBTabsLink>
             </MDBTabsItem>
-            {/* <MDBTabsItem>
-            <MDBTabsLink onClick={() => handleBasicClick('tab3')} active={basicActive === 'tab3'}>
-            <MDBIcon fas icon='hand-holding-usd' className='me-2' /> Commission History
-            </MDBTabsLink>
-            </MDBTabsItem> */}
         </MDBTabs>
 
         <MDBTabsContent>
             <MDBTabsPane open={basicActive === 'tab1'}>
-            {/* <FiatWalletHistory/> */}
+            <MDBTypography tag={'h2'}>Commission Payout List</MDBTypography>
+            <SAcommissionpayoutlist/>
+            <MDBTypography tag={'h2'}>Commission Payout History</MDBTypography>
+            <SAcommissionpayouthistory/>
             </MDBTabsPane>
             <MDBTabsPane open={basicActive === 'tab2'}> 
-            {/* <GameWalletHistory/> */}
+            <MDBTypography tag={'h2'}>Game Payout List</MDBTypography>
+            <SAgamepayoutlist/>
+            <MDBTypography tag={'h2'}>Game Payout History</MDBTypography>
+            <SAgamepayouthistory/>
             </MDBTabsPane>
-            {/* <MDBTabsPane open={basicActive === 'tab3'}>
-            <CommissionHistory/>
-            </MDBTabsPane> */}
         </MDBTabsContent>
         </div>
     )

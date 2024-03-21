@@ -13,7 +13,7 @@ import {
   Col,
 } from "reactstrap";
 import Swal from "sweetalert2";
-function GameWalletHistory() {
+function GameHistory({id}) {
     const [gamewallethistory, setGameWalletHistory] = useState([]),
     [page, setPage] = useState(1),
     [isloading, setIsLoading] = useState(false),
@@ -21,7 +21,7 @@ function GameWalletHistory() {
 
     useEffect(() => {
       setIsLoading(true)
-        fetch(`${process.env.REACT_APP_API_URL}/wallethistory/playerwallethistory?type=gamebalance&page=${page - 1}&limit=10`,{
+        fetch(`${process.env.REACT_APP_API_URL}/wallethistory/getplayerwallethistoryforadmin?playerid=${id}&type=Creature Game&page=${page - 1}&limit=10`,{
           method: 'GET',
           credentials: 'include',
           headers: {
@@ -114,4 +114,4 @@ function GameWalletHistory() {
   );
 }
 
-export default GameWalletHistory;
+export default GameHistory;

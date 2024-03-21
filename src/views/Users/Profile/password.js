@@ -9,8 +9,7 @@ import {
  } from "mdb-react-ui-kit";
 import React from "react";
 import Swal from "sweetalert2";
-const SuperAdminSettings = () => {
-
+const UserChangePass = () => {
     const handleChangePass = (e) => {
         e.preventDefault()
         const {password, confirmpassword} = e.target
@@ -21,7 +20,7 @@ const SuperAdminSettings = () => {
                 text: "Please check the password you input"
             })
         } else {
-            fetch(`${process.env.REACT_APP_API_URL}/staffuser/changepasssuperadmin`,{
+            fetch(`${process.env.REACT_APP_API_URL}/user/changepassworduser`,{
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -87,4 +86,4 @@ const SuperAdminSettings = () => {
     )
 }
 
-export default SuperAdminSettings;
+export default UserChangePass;

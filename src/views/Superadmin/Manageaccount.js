@@ -8,6 +8,7 @@ import {
     MDBIcon
 } from 'mdb-react-ui-kit';
 import SAmanageaccount from "./Manageaccount/Manageaccount";
+import SAmanageplayer from "./Manageaccount/Manageplayer";
 const SuperAdminManageAccount = () => {
     const [basicActive, setBasicActive] = useState('tab1');
 
@@ -43,7 +44,7 @@ const SuperAdminManageAccount = () => {
             <SAmanageaccount/>
             </MDBTabsPane>
             <MDBTabsPane open={basicActive === 'tab2'}> 
-            {/* <GameWalletHistory/> */}
+            <SAmanageplayer/>
             </MDBTabsPane>
             {/* <MDBTabsPane open={basicActive === 'tab3'}>
             <CommissionHistory/>

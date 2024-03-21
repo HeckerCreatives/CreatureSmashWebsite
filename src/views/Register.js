@@ -92,7 +92,7 @@ const Register = () => {
   }
 
     return (
-        <MDBContainer fluid className="d-flex align-items-center justify-content-center min-vh-100" style={{background: `no-repeat url(${bg})`}}>
+        <MDBContainer fluid className="d-flex align-items-center justify-content-center min-vh-100" style={{background: `center/cover no-repeat url(${bg})`}}>
         <MDBRow>
             <MDBCol>
             <MDBCard>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 // react plugin used to create charts
 import { Line, Pie } from "react-chartjs-2";
 // reactstrap components
@@ -19,9 +19,10 @@ import {
     MDBTabsPane,
     MDBIcon
   } from 'mdb-react-ui-kit';
-
+import Swal from "sweetalert2";
 function AdminDashboard() {
     const [basicActive, setBasicActive] = useState('tab1');
+    const [wallet, setWallet] = useState([]);
 
     const handleBasicClick = (value) => {
         if (value === basicActive) {
@@ -30,7 +31,43 @@ function AdminDashboard() {
 
         setBasicActive(value);
     };
-      
+    
+    useEffect(() => {
+      fetch(`${process.env.REACT_APP_API_URL}/staffuser/getadmindashboard`,{
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then(result => result.json())
+      .then(data => {
+        if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+          Swal.fire({
+            icon: "error",
+            title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+            text: data.message == "duallogin" ? "Hi Creature, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Creature please contact admin" : "You Will Redirect to Login",
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(ok => {
+            if(ok.isConfirmed){
+              window.location.href = "/login";
+            }
+          })
+        }
+
+        if(data.message == "success"){
+          setWallet(data.data)
+        } else if (data.message == "failed"){
+          Swal.fire({
+              title: data.message,
+              icon: "info",
+              text: data.data
+          })
+        }
+      })
+
+    },[])
+
   return (
     <>
       <div className="content">
@@ -47,7 +84,7 @@ function AdminDashboard() {
                   <Col md="8" xs="7">
                     <div className="numbers">
                       <p className="card-category">Total Cashin</p>
-                      <CardTitle tag="p">$150</CardTitle>
+                      <CardTitle tag="p">{wallet.totalpayin}</CardTitle>
                       <p />
                     </div>
                   </Col>
@@ -73,7 +110,7 @@ function AdminDashboard() {
                   <Col md="8" xs="7">
                     <div className="numbers">
                       <p className="card-category">Total Cashout</p>
-                      <CardTitle tag="p">$ 1,345</CardTitle>
+                      <CardTitle tag="p">{wallet.totalpayout}</CardTitle>
                       <p />
                     </div>
                   </Col>
@@ -141,7 +178,7 @@ function AdminDashboard() {
           </Col> */}
         </Row>
 
-        <MDBTabs className='mb-3' pills>
+        {/* <MDBTabs className='mb-3' pills>
         <MDBTabsItem>
           <MDBTabsLink onClick={() => handleBasicClick('tab1')} active={basicActive === 'tab1'}>
           <MDBIcon fas icon='credit-card' className='me-2' />Total Cashin History
@@ -152,11 +189,6 @@ function AdminDashboard() {
           <MDBIcon fas icon='wallet' className='me-2' />Total Cashout History
           </MDBTabsLink>
         </MDBTabsItem>
-        {/* <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('tab3')} active={basicActive === 'tab3'}>
-          <MDBIcon fas icon='hand-holding-usd' className='me-2' /> Commission History
-          </MDBTabsLink>
-        </MDBTabsItem> */}
       </MDBTabs>
 
       <MDBTabsContent>
@@ -166,7 +198,7 @@ function AdminDashboard() {
         <MDBTabsPane open={basicActive === 'tab2'}> 
         Wala din
         </MDBTabsPane>
-      </MDBTabsContent>
+      </MDBTabsContent> */}
       </div>
     </>
   );

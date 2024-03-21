@@ -43,7 +43,7 @@ const BronzeInventory = () => {
             if(data.message == "success"){
                 const bgoblin = data.data.b_goblin
                 const btroll = data.data.b_troll
-                const bogre = data.data.b_ogre
+                const bogre = data.data.b_ogre  
                 const borc = data.data.b_orc
                 
                 setGoblin(bgoblin)
