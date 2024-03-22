@@ -82,7 +82,7 @@ const BronzeInventory = ({id}) => {
                       ))
                       :
                       <tr className="text-center">
-                        <td colSpan={3}>No Data</td>
+                        <td colSpan={4}>No Data</td>
                       </tr>
                     }
                     

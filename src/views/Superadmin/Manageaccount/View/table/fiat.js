@@ -87,7 +87,7 @@ function FiatHistory({id}) {
                         maximumFractionDigits: 2
                         })}
                         </td>
-                        <td>{data.from?.username}</td>
+                        <td>{data.fromusername}</td>
                       </tr>
                       ))
                       :
