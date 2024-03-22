@@ -71,7 +71,7 @@ const CreatureCard = ({title, description, amount, image, type}) => {
                 <MDBCardBody>
                 <MDBCardTitle tag="h3">{title}</MDBCardTitle>
                 <MDBCardImage className='mb-3' top src={image} alt="..." />
-                    <MDBCardSubTitle className='mb-2 text-end' tag="h5">Price: {amount}</MDBCardSubTitle>
+                    <MDBCardSubTitle className='mb-2 text-center' tag="h5">Price: {amount}</MDBCardSubTitle>
                     <MDBCardText className='my-2 text-center' tag="p">Duration: {description}</MDBCardText>
                     
                     <center>

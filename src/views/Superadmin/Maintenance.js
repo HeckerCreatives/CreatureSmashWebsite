@@ -14,7 +14,7 @@ const Maintenance = () => {
     const [fullgame, setFullGame] = useState("")
     const [fightgame, setFightGame] = useState("")
     const [eventgame, setEventGame] = useState("")
-
+    const [payoutgame, setPayoutGame] = useState("")
     useEffect(()=> {
         fetch(`${process.env.REACT_APP_API_URL}/maintenance/getmaintenance`,{
             method: 'GET',
@@ -42,9 +42,11 @@ const Maintenance = () => {
                 const Fullg = data.data.maintenancelist.find(e => e.type == "fullgame")
                 const Fg = data.data.maintenancelist.find(e => e.type == "fightgame")
                 const Eg = data.data.maintenancelist.find(e => e.type == "eventgame")
+                const Po = data.data.maintenancelist.find(e => e.type == "payout")
                 setFightGame(Fg.value)
                 setEventGame(Eg.value)
                 setFullGame(Fullg.value)
+                setPayoutGame(Po.value)
               } else if (data.message == "failed"){
                 Swal.fire({
                   title: data.message,
@@ -116,6 +118,7 @@ const Maintenance = () => {
             }
           });
     }
+
     return(
         <div className="content">
             <MDBContainer>
@@ -163,6 +166,23 @@ const Maintenance = () => {
                     </div>
                         <MDBCardTitle>Maintenance Event Game</MDBCardTitle>
                         
+                    </MDBCardBody>
+                    </MDBCard>
+                    </MDBCol>
+                    
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol lg={4}>
+                    <MDBCard>
+                    <MDBCardBody>
+                    <div className="d-flex justify-content-end align-items-end mb-2">
+                    <MDBSwitch 
+                    checked={payoutgame  == "1" ? true : false}  name="payout" 
+                    id='flexSwitchCheckDefault'
+                    onChange={(e) => gamemaintenance(e.target.name,e.target.checked ? 1 : 0)}
+                    />
+                    </div>
+                        <MDBCardTitle>Maintenance Payout</MDBCardTitle>
                     </MDBCardBody>
                     </MDBCard>
                     </MDBCol>
