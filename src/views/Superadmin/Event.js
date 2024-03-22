@@ -26,11 +26,11 @@ const SuperAdminEvent = () => {
             <MDBIcon fas  icon="trophy" className='me-2'/>LB
             </MDBTabsLink>
             </MDBTabsItem>
-            <MDBTabsItem>
+            {/* <MDBTabsItem>
             <MDBTabsLink onClick={() => handleBasicClick('tab2')} active={basicActive === 'tab2'}>
             <MDBIcon fas icon="cog" className='me-2'/>Controls
             </MDBTabsLink>
-            </MDBTabsItem>
+            </MDBTabsItem> */}
             {/* <MDBTabsItem>
             <MDBTabsLink onClick={() => handleBasicClick('tab3')} active={basicActive === 'tab3'}>
             <MDBIcon fas icon='hand-holding-usd' className='me-2' /> Commission History

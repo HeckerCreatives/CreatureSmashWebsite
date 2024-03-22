@@ -96,7 +96,7 @@ const SuperAdminDashboard = () => {
                   </Col>
                   <Col md="8" xs="7">
                     <div className="numbers">
-                      <p className="card-category">Commissions</p>
+                      <p className="card-category">User Commission</p>
                       <CardTitle tag="p">
                         {details?.commission?.toLocaleString('en-US', {
                         style: 'decimal',
@@ -290,7 +290,7 @@ const SuperAdminDashboard = () => {
                   </Col>
                   <Col md="8" xs="7">
                     <div className="numbers">
-                      <p className="card-category">Commissioned</p>
+                      <p className="card-category">Company Commission</p>
                       <CardTitle tag="p">
                         {details?.commissioned?.toLocaleString('en-US', {
                         style: 'decimal',
