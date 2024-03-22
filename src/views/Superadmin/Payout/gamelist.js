@@ -54,6 +54,7 @@ const SAgamepayoutlist = () => {
     },[page])
 
     const handlePayout = (id, status) => {
+        setIsLoading(true)
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -91,6 +92,7 @@ const SAgamepayoutlist = () => {
                     }
                     
                     if(data.message == "success"){
+                        setIsLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "success",
@@ -101,6 +103,7 @@ const SAgamepayoutlist = () => {
                             }
                         })
                     } else if (data.message == "failed"){
+                        setIsLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "info",
@@ -108,6 +111,8 @@ const SAgamepayoutlist = () => {
                         })
                     }
                 })
+            } else {
+                setIsLoading(false)
             }
           });
     }

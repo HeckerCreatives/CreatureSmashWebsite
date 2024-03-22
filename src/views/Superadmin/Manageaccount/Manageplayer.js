@@ -13,6 +13,7 @@ import {
     MDBModalBody,
     MDBModalFooter,
     MDBInput,
+    MDBSpinner,
  } from 'mdb-react-ui-kit';
 import Swal from "sweetalert2";
 import PaginationPager from "components/Pagination/pagination";
@@ -62,6 +63,7 @@ const SAmanageplayer = () => {
     },[page])
 
     const handleBan = (user, status) => {
+      setIsLoading(true)
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -99,6 +101,7 @@ const SAmanageplayer = () => {
                     }
   
                     if(data.message == "success"){
+                      setIsLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "success",
@@ -109,6 +112,7 @@ const SAmanageplayer = () => {
                             }
                         })
                     } else if (data.message == "failed"){
+                      setIsLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "info",
@@ -116,12 +120,15 @@ const SAmanageplayer = () => {
                         })
                     }
                   })
+            } else {
+              setIsLoading(false)
             }
           });
        
-      }
+    }
   
       const handleChangePassword = async (user) => {
+        setIsLoading(true)
         const { value: password } = await Swal.fire({
           title: "Enter password",
           input: "password",
@@ -167,6 +174,7 @@ const SAmanageplayer = () => {
             }
   
             if(data.message == "success"){
+              setIsLoading(false)
                 Swal.fire({
                     title: data.message,
                     icon: "success",
@@ -177,6 +185,7 @@ const SAmanageplayer = () => {
                     }
                 })
             } else if (data.message == "failed"){
+              setIsLoading(false)
                 Swal.fire({
                     title: data.message,
                     icon: "info",
@@ -184,6 +193,8 @@ const SAmanageplayer = () => {
                 })
             }
           })
+        } else {
+          setIsLoading(false)
         }
        
       }
@@ -221,12 +232,12 @@ const SAmanageplayer = () => {
                         window.open(url, '_blank');
                       }}
                        >View</MDBBtn> 
-                      <MDBBtn size="sm" className="m-1" color="info" onClick={() => handleChangePassword(data.id)}>Change Password</MDBBtn>
+                      <MDBBtn disabled={isloading} size="sm" className="m-1" color="info" onClick={() => handleChangePassword(data.id)}>{isloading ? <MDBSpinner size="sm"/> : 'Change Password'}</MDBBtn>
                       {
                         data.status == "active" ? 
-                      <MDBBtn size="sm" className="m-1" color="danger" onClick={() => handleBan(data.id, "banned")}>Ban</MDBBtn>
+                      <MDBBtn disabled={isloading} size="sm" className="m-1" color="danger" onClick={() => handleBan(data.id, "banned")}>{isloading ? <MDBSpinner size="sm"/> : 'Ban'}</MDBBtn>
                       :
-                      <MDBBtn size="sm" className="m-1" color="warning" onClick={() => handleBan(data.id, "active")}>Unban</MDBBtn>
+                      <MDBBtn disabled={isloading} size="sm" className="m-1" color="warning" onClick={() => handleBan(data.id, "active")}>{isloading ? <MDBSpinner size="sm"/> : 'Unban'}</MDBBtn>
                       }
                       
                       </td>

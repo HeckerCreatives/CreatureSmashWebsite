@@ -6,14 +6,17 @@ import {
     MDBCard,
     MDBCardBody,
     MDBBtn, 
-    MDBCardText} from "mdb-react-ui-kit";
+    MDBCardText,
+    MDBSpinner} from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import Swal from "sweetalert2";
 import bg from "assets/recent-game-bg.png"
 const Login = () => {
-
+    const [loading, setLoading] = useState(false)
+    
     const login = (e) => {
         e.preventDefault();
+        setLoading(true)
         const {username, password} = e.target
         fetch(`${process.env.REACT_APP_API_URL}/auth/login?username=${username.value.toLowerCase()}&password=${password.value}`,{
             method: 'GET',
@@ -23,17 +26,21 @@ const Login = () => {
             },
         }).then(result => result.json())
         .then(data => {
-            if (data.message !== "success") {        
+            if (data.message !== "success") {    
+                setLoading(false)    
 				Swal.fire({
                     title: data.message,
                     icon: "info",
                     text: data.data
                 })
 			} else {
+                setLoading(false)
                 Swal.fire({
                     title: "Login Successfully",
                     icon: "success",
-                    text: `Welcome ${username.value.toLowerCase()}`
+                    text: `Welcome ${username.value.toLowerCase()}`,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false
                   })
                   .then(result1 => {
                     if(result1.isConfirmed){
@@ -70,8 +77,8 @@ const Login = () => {
                 <a href='#!'>Forgot password?</a>
                 </div>
 
-                <MDBBtn type='submit' className='mb-4' block>
-                    Sign in
+                <MDBBtn disabled={loading} type='submit' className='mb-4' block>
+                    {loading ? <MDBSpinner size="sm"/> : 'Sign in'}
                 </MDBBtn>
 
                 <div className='text-center'>

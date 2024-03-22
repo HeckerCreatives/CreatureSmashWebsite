@@ -1,11 +1,14 @@
-import { MDBContainer, MDBTypography, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBInput, MDBBtn } from "mdb-react-ui-kit";
-import React from "react";
+import { MDBContainer, MDBTypography, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBInput, MDBBtn, MDBSpinner } from "mdb-react-ui-kit";
+import React, { useState } from "react";
 import SApayinhistory from "./Payin/payinhistory";
 import SApayinlist from "./Payin/payinlist";
 import Swal from "sweetalert2";
 const SuperAdminPayin = () => {
+    const [loading, setLoading] = useState(false)
+
     const handleSend = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setLoading(true)
         const {username, amount} = e.target
 
         Swal.fire({
@@ -45,6 +48,7 @@ const SuperAdminPayin = () => {
                     }
         
                     if(data.message == "success"){
+                        setLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "success",
@@ -55,6 +59,7 @@ const SuperAdminPayin = () => {
                             }
                         })
                     } else if (data.message == "failed"){
+                        setLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "info",
@@ -62,6 +67,8 @@ const SuperAdminPayin = () => {
                         })
                     }
                 })
+            } else {
+                setLoading(false)
             }
           });
     }
@@ -78,7 +85,7 @@ const SuperAdminPayin = () => {
                                 <MDBInput name="username" label="Input player username" required/>
                                 <label>Amount</label>
                                 <MDBInput name="amount" label="Input amount to send" min={1} required/>
-                                <MDBBtn type="submit">Send</MDBBtn>
+                                <MDBBtn disabled={loading} type="submit">{loading ? <MDBSpinner size="sm"/> : 'Send'}</MDBBtn>
                             </MDBCardBody>
                             </form>
                         </MDBCard>

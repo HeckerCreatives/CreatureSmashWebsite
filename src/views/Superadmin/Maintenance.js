@@ -15,6 +15,7 @@ const Maintenance = () => {
     const [fightgame, setFightGame] = useState("")
     const [eventgame, setEventGame] = useState("")
     const [payoutgame, setPayoutGame] = useState("")
+    const [loading, setLoading] = useState(false)
     useEffect(()=> {
         fetch(`${process.env.REACT_APP_API_URL}/maintenance/getmaintenance`,{
             method: 'GET',
@@ -58,6 +59,7 @@ const Maintenance = () => {
     },[])
 
     const gamemaintenance = (type, ischecked) => {
+        setLoading(true)
         Swal.fire({
             title: "Are you sure?",
             // text: "You won't be able to revert this!",
@@ -97,6 +99,7 @@ const Maintenance = () => {
                     }
 
                     if(data.message == "success"){
+                        setLoading(false)
                         Swal.fire({
                             title: `Maintenance ${ischecked == "0" ? "Off": "On"}`,
                             icon: "success",
@@ -107,14 +110,17 @@ const Maintenance = () => {
                             }
                         })
                     } else if (data.message == "failed"){
-                    Swal.fire({
-                        title: data.message,
-                        icon: "info",
-                        text: data.data
-                    })
+                        setLoading(false)
+                        Swal.fire({
+                            title: data.message,
+                            icon: "info",
+                            text: data.data
+                        })
                     }
 
                 })
+            } else {
+                setLoading(false)
             }
           });
     }
@@ -128,6 +134,7 @@ const Maintenance = () => {
                     <MDBCardBody>
                     <div className="d-flex justify-content-end align-items-end mb-2">
                     <MDBSwitch 
+                    disabled={loading}
                     checked={fullgame  == "1" ? true : false}  name="fullgame" 
                     id='flexSwitchCheckDefault'
                     onChange={(e) => gamemaintenance(e.target.name,e.target.checked ? 1 : 0)}
@@ -143,6 +150,7 @@ const Maintenance = () => {
                     <MDBCardBody>
                     <div className="d-flex justify-content-end align-items-end mb-2">
                     <MDBSwitch 
+                    disabled={loading}
                     checked={fightgame  == "1" ? true : false}  name="fightgame" 
                     id='flexSwitchCheckDefault'
                     onChange={(e) => gamemaintenance(e.target.name,e.target.checked ? 1 : 0)}
@@ -158,7 +166,8 @@ const Maintenance = () => {
                     <MDBCard>
                     <MDBCardBody>
                     <div className="d-flex justify-content-end align-items-end mb-2">
-                    <MDBSwitch 
+                    <MDBSwitch
+                    disabled={loading} 
                     checked={eventgame  == "1" ? true : false}  name="eventgame" 
                     id='flexSwitchCheckDefault'
                     onChange={(e) => gamemaintenance(e.target.name,e.target.checked ? 1 : 0)}
@@ -177,6 +186,7 @@ const Maintenance = () => {
                     <MDBCardBody>
                     <div className="d-flex justify-content-end align-items-end mb-2">
                     <MDBSwitch 
+                    disabled={loading}
                     checked={payoutgame  == "1" ? true : false}  name="payout" 
                     id='flexSwitchCheckDefault'
                     onChange={(e) => gamemaintenance(e.target.name,e.target.checked ? 1 : 0)}

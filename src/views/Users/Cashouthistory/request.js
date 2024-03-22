@@ -7,11 +7,13 @@ import {
     MDBBtn,
     MDBInput,
     MDBRow,
-    MDBCol
+    MDBCol,
+    MDBSpinner
   } from 'mdb-react-ui-kit';
   import Swal from "sweetalert2";
 const CashoutRequest = () => {
   const [mydetail, setMyDetail] = useState([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/user/getuserdetails`,{
@@ -49,7 +51,8 @@ const CashoutRequest = () => {
   },[])
     
     const handleRequestPayout = (e) => {
-      e.preventDefault()
+      e.preventDefault();
+      setLoading(true)
       const { wallettype, amount } = e.target
       fetch(`${process.env.REACT_APP_API_URL}/payout/requestpayout`,{
         method: 'POST',
@@ -64,6 +67,7 @@ const CashoutRequest = () => {
       }).then(result => result.json())
       .then(data => {
         if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+          
           Swal.fire({
             icon: "error",
             title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
@@ -78,6 +82,7 @@ const CashoutRequest = () => {
         }
 
         if(data.message == "success"){
+          setLoading(false)
           Swal.fire({
             title: data.message,
             icon: "success",
@@ -88,6 +93,7 @@ const CashoutRequest = () => {
             }
           })
         } else if (data.message == "failed"){
+          setLoading(false)
           Swal.fire({
             title: data.message,
             icon: "info",
@@ -132,7 +138,7 @@ const CashoutRequest = () => {
             <span  style={{fontSize: "12px"}}>PLEASE UPDATE YOUR PROFILE BEFORE REQUESTING A CASHOUT. CASHOUT REQUESTS ARE ONLY AVAILABLE ON TUESDAYS.</span>
             </MDBCol>
             <MDBCol className="text-end">
-            <MDBBtn type="submit">Request</MDBBtn>
+            <MDBBtn disabled={loading} type="submit">{loading ? <MDBSpinner size="sm"/> : 'Request'}</MDBBtn>
             </MDBCol>
         </MDBRow>
         </form>

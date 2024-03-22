@@ -8,7 +8,8 @@ import {
     MDBTableHead, 
     MDBTableBody,
     MDBTypography,
-    MDBBtn
+    MDBBtn,
+    MDBSpinner
  } from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -58,6 +59,7 @@ const TopupList = () => {
     },[page])
 
     const handlePayin = (id, status) => {
+        setIsLoading(true)
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -95,6 +97,7 @@ const TopupList = () => {
                     }
                     
                     if(data.message == "success"){
+                        setIsLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "success",
@@ -105,6 +108,7 @@ const TopupList = () => {
                             }
                         })
                     } else if (data.message == "failed"){
+                        setIsLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "info",
@@ -112,6 +116,8 @@ const TopupList = () => {
                         })
                     }
                 })
+            } else {
+                setIsLoading(false)
             }
           });
     }
@@ -144,11 +150,11 @@ const TopupList = () => {
                                 })}</td>
                                 <td>{data.status}</td>
                                 <td>
-                                    <MDBBtn className="m-1" size="sm" color="info" onClick={() => handlePayin(data.id, "done")}>
-                                        Process
+                                    <MDBBtn disabled={isloading} className="m-1" size="sm" color="info" onClick={() => handlePayin(data.id, "done")}>
+                                        {isloading ? <MDBSpinner size="sm"/> : 'Process'}
                                     </MDBBtn>
-                                    <MDBBtn className="m-1" size="sm" color="danger" onClick={() => handlePayin(data.id, "reject")}>
-                                        Reject
+                                    <MDBBtn disabled={isloading} className="m-1" size="sm" color="danger" onClick={() => handlePayin(data.id, "reject")}>
+                                        {isloading ? <MDBSpinner size="sm"/> : 'Reject'}
                                     </MDBBtn>
                                 </td>
                             </tr>

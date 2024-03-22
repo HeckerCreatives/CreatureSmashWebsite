@@ -13,6 +13,7 @@ import {
     MDBModalBody,
     MDBModalFooter,
     MDBInput,
+    MDBSpinner,
  } from 'mdb-react-ui-kit';
 import Swal from "sweetalert2";
 import PaginationPager from "components/Pagination/pagination";
@@ -67,6 +68,7 @@ const SAmanageaccount = () => {
 
     const handleCreate = (e) => {
         e.preventDefault();
+        setIsLoading(true)
         const {username, password} = e.target
         Swal.fire({
             title: "Are you sure?",
@@ -105,6 +107,7 @@ const SAmanageaccount = () => {
                     }
 
                     if(data.message == "success"){
+                        setIsLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "success",
@@ -115,6 +118,7 @@ const SAmanageaccount = () => {
                             }
                         })
                     } else if (data.message == "failed"){
+                        setIsLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "info",
@@ -122,12 +126,15 @@ const SAmanageaccount = () => {
                         })
                     }
                   })
+            } else {
+              setIsLoading(false)
             }
           });
        
     }
 
     const handleBan = (user, status) => {
+      setIsLoading(true)
       Swal.fire({
           title: "Are you sure?",
           text: "You won't be able to revert this!",
@@ -165,6 +172,7 @@ const SAmanageaccount = () => {
                   }
 
                   if(data.message == "success"){
+                      setIsLoading(false)
                       Swal.fire({
                           title: data.message,
                           icon: "success",
@@ -175,6 +183,7 @@ const SAmanageaccount = () => {
                           }
                       })
                   } else if (data.message == "failed"){
+                      setIsLoading(false)
                       Swal.fire({
                           title: data.message,
                           icon: "info",
@@ -188,6 +197,7 @@ const SAmanageaccount = () => {
     }
 
     const handleChangePassword = async (user) => {
+      setIsLoading(true)
       const { value: password } = await Swal.fire({
         title: "Enter your password",
         input: "password",
@@ -233,6 +243,7 @@ const SAmanageaccount = () => {
           }
 
           if(data.message == "success"){
+              setIsLoading(false)
               Swal.fire({
                   title: data.message,
                   icon: "success",
@@ -243,6 +254,7 @@ const SAmanageaccount = () => {
                   }
               })
           } else if (data.message == "failed"){
+              setIsLoading(false)
               Swal.fire({
                   title: data.message,
                   icon: "info",
@@ -250,6 +262,8 @@ const SAmanageaccount = () => {
               })
           }
         })
+      } else {
+        setIsLoading(false)
       }
      
     }
@@ -281,12 +295,12 @@ const SAmanageaccount = () => {
                       </td>
                       <td>{data.username}</td>
                       <td>
-                      <MDBBtn size="sm" className="m-1" color="info" onClick={() => handleChangePassword(data.username)}>Change Password</MDBBtn>
+                      <MDBBtn disabled={isloading} size="sm" className="m-1" color="info" onClick={() => handleChangePassword(data.username)}>{isloading ? <MDBSpinner size="sm"/> : 'Change Password'}</MDBBtn>
                       {
                         data.status == "active" ? 
-                      <MDBBtn size="sm" className="m-1" color="danger" onClick={() => handleBan(data.username, "banned")}>Ban</MDBBtn>
+                      <MDBBtn disabled={isloading} size="sm" className="m-1" color="danger" onClick={() => handleBan(data.username, "banned")}>{isloading ? <MDBSpinner size="sm"/> : 'Ban'}</MDBBtn>
                       :
-                      <MDBBtn size="sm" className="m-1" color="warning" onClick={() => handleBan(data.username, "active")}>Unban</MDBBtn>
+                      <MDBBtn disabled={isloading} size="sm" className="m-1" color="warning" onClick={() => handleBan(data.username, "active")}>{isloading ? <MDBSpinner size="sm"/> : 'Unban'}</MDBBtn>
                       }
                       
                       </td>
@@ -323,7 +337,7 @@ const SAmanageaccount = () => {
             <MDBInput name="password" type="password" label="Input Password here"/>
             </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn type="submit">Add</MDBBtn>
+              <MDBBtn disabled={isloading} type="submit">{isloading ? <MDBSpinner size="sm"/> : 'Add '}</MDBBtn>
             </MDBModalFooter>
             </form>
           </MDBModalContent>

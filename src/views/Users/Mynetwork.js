@@ -17,23 +17,6 @@
 
 */
 import React, {useEffect, useState} from "react";
-// reactstrap components
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Row,
-  Col,
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane,
-  CardText,
-  Button
-} from "reactstrap";
 
 import {
     MDBTabs,
@@ -44,26 +27,6 @@ import {
     MDBIcon
   } from 'mdb-react-ui-kit';
 // core components
-import Tables from "../Tables";
-import OwnCreatureCard from "components/Cards/Owncreature";
-import bronzegoblin from "assets/01-Bronze/01-Goblin.png"
-import bronzetroll from "assets/01-Bronze/02-Troll.png"
-import bronzeogre from "assets/01-Bronze/03-Ogre.png"
-import bronzeorc from "assets/01-Bronze/04-Orc.png"
-
-import silvergoblin from "assets/02-Silver/01-Goblin.png"
-import silvertroll from "assets/02-Silver/02-Troll.png"
-import silverogre from "assets/02-Silver/03-Ogre.png"
-import silverorc from "assets/02-Silver/04-Orc.png"
-import silveryeti from "assets/02-Silver/05-Yeti.png"
-import silverminotaur from "assets/02-Silver/06-Minotaur.png"
-import silverdragon from "assets/02-Silver/07-Dragon.png"
-
-import goldorc from "assets/03-Gold/01-Orc.png"
-import goldyeti from "assets/03-Gold/02-Yeti.png"
-import goldminotaur from "assets/03-Gold/03-Minotaur.png"
-import golddragon from "assets/03-Gold/04-Dragon.png"
-import goldleviathan from "assets/03-Gold/05-Leviathan.png"
 import Level1 from "./Networktables/level1";
 import Level2 from "./Networktables/level2";
 import Level3 from "./Networktables/level3";

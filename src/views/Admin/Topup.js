@@ -8,14 +8,18 @@ import {
     MDBRow,
     MDBCol,
     MDBInput,
-    MDBTypography} from "mdb-react-ui-kit";
-import React from "react";
+    MDBTypography,
+    MDBSpinner} from "mdb-react-ui-kit";
+import React, { useState } from "react";
 import TopupHistory from "./Histories/Topuphistory";
 import TopupList from "./Histories/Topuplist";
 import Swal from "sweetalert2";
 const AdminTopup = () => {
+    const [loading, setLoading] = useState(false)
+
     const handleSend = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setLoading(true)
         const {username, amount} = e.target
 
         Swal.fire({
@@ -55,6 +59,7 @@ const AdminTopup = () => {
                     }
         
                     if(data.message == "success"){
+                        setLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "success",
@@ -65,6 +70,7 @@ const AdminTopup = () => {
                             }
                         })
                     } else if (data.message == "failed"){
+                        setLoading(false)
                         Swal.fire({
                             title: data.message,
                             icon: "info",
@@ -72,6 +78,8 @@ const AdminTopup = () => {
                         })
                     }
                 })
+            } else {
+                setLoading(false)
             }
           });
     }
@@ -89,7 +97,7 @@ const AdminTopup = () => {
                                 <MDBInput name="username" label="Input player username" required/>
                                 <label>Amount</label>
                                 <MDBInput name="amount" label="Input amount to send" min={1} required/>
-                                <MDBBtn type="submit">Send</MDBBtn>
+                                <MDBBtn disabled={loading} type="submit">{loading ? <MDBSpinner size="sm"/> : 'Send'}</MDBBtn>
                             </MDBCardBody>
                             </form>
                         </MDBCard>

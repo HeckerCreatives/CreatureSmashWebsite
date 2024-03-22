@@ -7,7 +7,8 @@ import {
     MDBCardBody,
     MDBBtn, 
     MDBCardText,
-    MDBIcon
+    MDBIcon,
+    MDBSpinner
 } from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
 import bg from "assets/register-bg.png"
@@ -15,6 +16,8 @@ import Swal from "sweetalert2";
 const Register = () => {
   const [referral, setReferral] = useState("")
   const [referralusername, setReferralUsername] = useState("")
+  const [loading, setLoading] = useState(false)
+
   useEffect(()=> {
     const url = new URL(window.location.href)
     const params = new URLSearchParams(url.search);
@@ -43,15 +46,27 @@ const Register = () => {
       window.location.href = "/register?id=65eeeeabd9576a4f8ae38afd";
     }
   },[])
-
+  
   const register = (e) => {
     e.preventDefault();
+    setLoading(true)
     const {username, password,  email, confirmpassword} = e.target
+    const specialChars = /[!@#$%^&*(),.?":{}|<>]/;
+
+    
 
     if(password.value !== confirmpassword.value){
+      setLoading(false)
       Swal.fire({
         title: "Password not Match",
         text: "Please Check Input Password",
+        icon: "error"
+      })
+    } else if (specialChars.test(username.value) || specialChars.test(password.value)) {
+      setLoading(false)
+      Swal.fire({
+        title: "Special character is not allowed",
+        text: "Please check your username or password if there is special characters.",
         icon: "error"
       })
     } else {
@@ -70,6 +85,7 @@ const Register = () => {
       }).then(result => result.json())
       .then(data => {
         if(data.message == "success"){
+          setLoading(false)
           Swal.fire({
             title: "Registered successfully",
             icon: "success"
@@ -78,9 +94,17 @@ const Register = () => {
               window.location.href = "/login"
             }
           })
+        } else {
+          setLoading(false)
+          Swal.fire({
+            title: data.message,
+            icon: "error",
+            text: data.data
+          })
         }
       })
       .catch(err => {
+        setLoading(false)
         Swal.fire({
           title: "Error",
           text: err,
@@ -114,8 +138,8 @@ const Register = () => {
 
               <MDBInput name="referral" className='mb-4' value={referralusername} label='Referral' disabled required/>
 
-              <MDBBtn type='submit' className='mb-4' block>
-                Sign up
+              <MDBBtn disabled={loading} type='submit' className='mb-4' block>
+                {loading ? <MDBSpinner size="sm" /> : 'Sign up'}
               </MDBBtn>
 
               <div className='text-center'>

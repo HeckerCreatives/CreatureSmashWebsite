@@ -5,15 +5,19 @@ import {
     MDBCardTitle,
     MDBCardText,
     MDBBtn,
-    MDBInput
+    MDBInput,
+    MDBSpinner
  } from "mdb-react-ui-kit";
-import React from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 const UserChangePass = () => {
+    const [loading, setLoading] = useState(false)
     const handleChangePass = (e) => {
         e.preventDefault()
+        setLoading(true)
         const {password, confirmpassword} = e.target
         if(confirmpassword.value !== password.value){
+            setLoading(false)
             Swal.fire({
                 title: "Check your input password",
                 icon: "error",
@@ -46,6 +50,7 @@ const UserChangePass = () => {
                 }
     
                 if(data.message == "success"){
+                    setLoading(false)
                      Swal.fire({
                         title: data.message,
                         icon: "success",
@@ -56,6 +61,7 @@ const UserChangePass = () => {
                         }
                     })
                 } else if (data.message == "failed"){
+                    setLoading(false)
                     Swal.fire({
                         title: data.message,
                         icon: "info",
@@ -77,7 +83,7 @@ const UserChangePass = () => {
                 <MDBInput type="password" name="password" label="Input Password Here" required/>
                 <label>Confirm Password</label>
                 <MDBInput type="password" name="confirmpassword" label="Input Confirm Password Here" required/>
-                <MDBBtn type="submit">Save</MDBBtn>
+                <MDBBtn disabled={loading} type="submit">{loading ? <MDBSpinner size="sm"/> : 'Save'}</MDBBtn>
                 </form>
             </MDBCardBody>
             </MDBCard>

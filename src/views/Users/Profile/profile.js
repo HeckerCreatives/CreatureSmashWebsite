@@ -20,7 +20,7 @@ import Swal from "sweetalert2";
 const Profile = () => {
     const [imahe, setImahe] = useState(null)
     const [mydetail, setMyDetail] = useState([])
-  
+    const [loading, setLoading] = useState(false)
   const handleChangeImage = (e) => {
     const image = e.target.files[0]
     setImahe(image);
@@ -63,6 +63,7 @@ const Profile = () => {
 
   const handleUpdateDetails = (e) => {
     e.preventDefault();
+    setLoading(true)
     const { firstname, lastname, address, city, country, postalcode, paymentmethod, accountnumber } = e.target
     Swal.fire({
       title: "Are you sure?",
@@ -107,6 +108,7 @@ const Profile = () => {
           }
 
           if(data.message == "success"){
+            setLoading(false)
             Swal.fire({
               title: data.message,
               icon: "success",
@@ -117,6 +119,7 @@ const Profile = () => {
               }
             })
           }  else if (data.message == "failed"){
+            setLoading(false)
             Swal.fire({
               title: data.message,
               icon: "info",
@@ -124,6 +127,8 @@ const Profile = () => {
             })
           }
         })
+      } else {
+        setLoading(false)
       }
     });
     
@@ -131,6 +136,7 @@ const Profile = () => {
 
   const handleChangePhoto = (e) => {
     e.preventDefault();
+    setLoading(true)
     const imgdata = new FormData()
 
     imgdata.append("file", imahe)
@@ -159,6 +165,7 @@ const Profile = () => {
       }
 
       if(data.message == "success"){
+        setLoading(false)
         Swal.fire({
           title: data.message,
           icon: "success",
@@ -169,6 +176,7 @@ const Profile = () => {
           }
         })
       }  else if (data.message == "failed"){
+        setLoading(false)
         Swal.fire({
           title: data.message,
           icon: "info",

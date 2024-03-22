@@ -8,15 +8,17 @@ import {
     MDBCardLink,
     MDBCardImage,
     MDBBtn,
-    MDBInput
+    MDBInput,
+    MDBSpinner
 } from 'mdb-react-ui-kit';
-import React from "react";
+import React, { useState } from "react";
 import plankton from "../../assets/img/plankton.jpg"
 import Swal from 'sweetalert2';
 const CreatureCard = ({title, description, amount, image, type}) => {
-    
+    const [loading, setLoading] = useState(false)
     const handleBuy = (e) => {
         e.preventDefault();
+        setLoading(true)
         const {qty} = e.target
         fetch(`${process.env.REACT_APP_API_URL}/inventory/buycreature`,{
             method: 'POST',
@@ -45,6 +47,7 @@ const CreatureCard = ({title, description, amount, image, type}) => {
             }
 
             if(data.message == "success"){
+                setLoading(false)
                 Swal.fire({
                     title: data.message,
                     icon: "success",
@@ -55,6 +58,7 @@ const CreatureCard = ({title, description, amount, image, type}) => {
                     }
                 })
             } else if (data.message == "failed"){
+                setLoading(false)
                 Swal.fire({
                   title: data.message,
                   icon: "info",
@@ -81,7 +85,7 @@ const CreatureCard = ({title, description, amount, image, type}) => {
                     </center>
                     
                     
-                    <MDBBtn type='submit' block>Buy Me</MDBBtn>
+                    <MDBBtn disabled={loading} type='submit' block>{loading ? <MDBSpinner size='sm'/> : 'Buy Me'}</MDBBtn>
                 </MDBCardBody>
             </form> 
             </MDBCard>

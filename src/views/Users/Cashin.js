@@ -7,14 +7,15 @@ import {
     MDBCardTitle,
     MDBCardText,
     MDBBtn, 
-    MDBInput} from "mdb-react-ui-kit";
+    MDBInput,
+    MDBSpinner} from "mdb-react-ui-kit";
 import React, { useState, useEffect} from "react";
 import CashinHistory from "./Cashinhistory/Cashinhistory";
 import Swal from "sweetalert2";
 
 const UserCashin = () => {
     const [wallet, setWallet] = useState([])
-
+    const [ loading, setLoading ] = useState(false)
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}/wallets/playerwallets`,{
         method: 'GET',
@@ -51,7 +52,8 @@ const UserCashin = () => {
     },[])
 
     const handleRequestPayin = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setLoading(true)
         const { amount } = e.target
         fetch(`${process.env.REACT_APP_API_URL}/payin/requestpayin`,{
             method: 'POST',
@@ -79,6 +81,7 @@ const UserCashin = () => {
             }
     
             if(data.message == "success"){
+                setLoading(false)
                 Swal.fire({
                     title: data.message,
                     icon: "success",
@@ -89,10 +92,11 @@ const UserCashin = () => {
                     }
                 })
             } else if (data.message == "failed"){
+                setLoading(false)
                 Swal.fire({
-                title: data.message,
-                icon: "info",
-                text: data.data
+                    title: data.message,
+                    icon: "info",
+                    text: data.data
                 })
             }
         })
@@ -109,7 +113,7 @@ const UserCashin = () => {
                             <form onSubmit={handleRequestPayin}>
                             <MDBCardTitle>Request Cashin:</MDBCardTitle>
                             <MDBInput min={1} type="number" name="amount" label="Input Amount"/>
-                            <MDBBtn type="submit">Request</MDBBtn>
+                            <MDBBtn disabled={loading} type="submit">{loading ? <MDBSpinner size="sm"/> : 'Request'}</MDBBtn>
                             </form>
                             </MDBCol>
                             <MDBCol className="card-stats" lg={6} style={{borderLeft: window.innerWidth > 768 ? "grey solid 2px" : ""}}>
